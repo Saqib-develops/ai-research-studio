@@ -12,10 +12,11 @@ def render_web():
     #templates = list(TEMPLATE_DIR.glob("*.py"))
     #print(templates)
     sys.path.append(str(BASE_DIR))
-    from prompts.template.zero_shot import ZeroShotPrompt
-
+ 
     OPTIONS = {
-       "Zero Shot" : ZeroShotPrompt
+       "Zero Shot" : "zero_shot",
+       "One Shot" : "one_shot",
+       "Few Shots" : "few_shot"
     }
 
     st.set_page_config(
@@ -29,7 +30,7 @@ def render_web():
 #select type of prompt
     prompt_type = st.selectbox(
       "select Prompt Technique",
-       OPTIONS
+       OPTIONS.keys()
     )
 
     user_prompt = st.text_area("Enter the prompt", height=150)
@@ -39,7 +40,7 @@ def render_web():
         if user_prompt.strip() =="":
             st.warning("Please Enter the Prompt")
         else:
-            final_prompt = PromptBuilder.build(prompt_type,user_prompt)
+            final_prompt = PromptBuilder.build(OPTIONS.get(prompt_type),user_prompt)
             groq = GroqService()
             response = groq.generate_response(final_prompt,temperate)
 
