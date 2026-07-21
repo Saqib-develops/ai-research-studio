@@ -1,40 +1,51 @@
 from prompts.BasePrompt import BasePrompt
 
+EXAMPLES = {
+
+    "fact_checker": """
+
+Claim:
+Python was released in 2015.
+
+Result:
+False
+
+Reason:
+Python was first released in 1991.
+
+----------------------
+
+Claim:
+GPT stands for Generative Pretrained Transformer.
+
+Result:
+True
+
+Reason:
+This is the official expansion.
+"""
+}
+
+
 class FewShotPrompt(BasePrompt):
 
-    def build(self, user_prompt: str) -> str:
-        prompt_template = f"""
+    def build(
+        self,
+        role: str,
+        user_prompt: str,
+        **kwargs
+    ) -> str:
 
-        Question:
-        Explain Array.
+        examples = EXAMPLES.get(role, "")
 
-        Answer:
-        An Array stores elements of the same data type.
+        return f"""
+You are acting as the {role}.
 
-        --------------------------------
+Learn from these examples.
 
-        Example 2
+{examples}
 
-        Question:
-        Explain Linear Search.
+Now evaluate:
 
-        Answer:
-        Linear Search checks every element sequentially.
-
-        --------------------------------
-
-        Example 3
-
-        Question:
-        Explain Bubble Sort.
-
-        Answer:
-        Bubble Sort repeatedly swaps adjacent elements.
-
-        --------------------------------
-
-        Now answer:
-
-        {user_prompt}
-        """
-        return prompt_template
+{user_prompt}
+"""

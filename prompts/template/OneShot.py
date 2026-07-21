@@ -1,18 +1,40 @@
 from prompts.BasePrompt import BasePrompt
 
+EXAMPLES = {
+
+    "paper_agent": """
+Example
+
+Paper:
+Transformers for NLP
+
+Summary:
+The paper introduces transformer architecture based on self-attention for sequence modelling.
+"""
+}
+
+
 class OneShotPrompt(BasePrompt):
 
-    def build(self, user_prompt: str) -> str:
-        prompt_template = f"""
-        Example:
-        Question:
-        Explain Linear Search in Java.
+    def build(
+        self,
+        role: str,
+        user_prompt: str,
+        **kwargs
+    ) -> str:
 
-        Answer:
-        Linear Search checks each element one by one until the target is found.
+        example = EXAMPLES.get(role, "")
 
-        Now answer:
+        return f"""
+You are acting as the {role}.
 
-        {user_prompt}
-        """
-        return prompt_template
+Below is one example.
+
+{example}
+
+Now perform the same task.
+
+Input:
+
+{user_prompt}
+"""

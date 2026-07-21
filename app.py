@@ -1,12 +1,13 @@
-'''
- this is the main entry point of the app 
-'''
+import streamlit as st
 
-from ui.web import render_web
-import sys 
+from ui.research_page import render_research
 
-def main():
-    render_web()
 
-if __name__ == '__main__':
-    sys.exit(main())
+st.set_page_config(
+    page_title="AI Research Studio",
+    page_icon="🤖",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+render_research()

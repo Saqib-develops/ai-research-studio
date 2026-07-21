@@ -24,8 +24,8 @@ def render_web():
        layout='wide'
     )
 
-    st.title("Prompt Engineering lab")
-    st.write("Learn Prompt Engineering by doing")
+    st.title("AI Research Studio")
+    st.write("Intelligent Report Generator using multi agent system")
 
 #select type of prompt
     prompt_type = st.selectbox(
