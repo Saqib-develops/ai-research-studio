@@ -106,8 +106,8 @@ Powered by **Groq Llama 3.3 70B Versatile**, Prompt Engineering and Multi-Agent 
 
 Planner → Research Agent → Paper Analysis → Fact Checker → Writer
 """)
-        st.write(state["keywords"])
-        st.write(state["search_results"])
+       # st.write(state["keywords"])
+       #st.write(state["search_results"])
 
         # ---------------- PLAN ---------------- #
 
