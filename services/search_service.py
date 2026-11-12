@@ -1,6 +1,5 @@
 import wikipedia
 
-
 class SearchService:
 
     def search(self, keyword):
@@ -8,17 +7,30 @@ class SearchService:
         wikipedia.set_lang("en")
 
         try:
+            print(f"[Wikipedia] Searching: {keyword}")
 
-            # Search for similar pages first
             results = wikipedia.search(keyword)
+            print("[Wikipedia] Search results:", results)
 
             if not results:
                 return None
 
-            # Use the best matching result
-            page = wikipedia.page(results[0], auto_suggest=False)
+            print("[Wikipedia] Fetching page:", results[0])
 
-            summary = wikipedia.summary(page.title, sentences=8)
+            page = wikipedia.page(
+                results[0],
+                auto_suggest=False
+            )
+
+            print("[Wikipedia] Fetching summary:", page.title)
+
+            summary = wikipedia.summary(
+                page.title,
+                sentences=8,
+                auto_suggest=False
+            )
+
+            print("[Wikipedia] Successfully retrieved:", page.title)
 
             return {
                 "title": page.title,
@@ -27,28 +39,13 @@ class SearchService:
             }
 
         except wikipedia.DisambiguationError as e:
+            print("[Wikipedia] Disambiguation:", e.options[:5])
+            return None
 
-            try:
-
-                page = wikipedia.page(e.options[0], auto_suggest=False)
-
-                summary = wikipedia.summary(page.title, sentences=8)
-
-                return {
-                    "title": page.title,
-                    "body": summary,
-                    "url": page.url
-                }
-
-            except Exception:
-                return None
-
-        except wikipedia.PageError:
-
+        except wikipedia.PageError as e:
+            print("[Wikipedia] Page error:", repr(e))
             return None
 
         except Exception as e:
-
-            print("Wikipedia Error:", e)
-
+            print("[Wikipedia] Unexpected error:", repr(e))
             return None

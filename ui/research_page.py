@@ -11,7 +11,7 @@ def render_research():
     st.markdown("""
 ### Multi-Agent Research & Report Generation Platform
 
-Powered by **Groq Llama 3.3 70B Versatile**, Prompt Engineering and Multi-Agent AI.
+Powered by **Groq openai/gpt-oss-120b**, Prompt Engineering and Multi-Agent AI.
 """)
 
     # ---------------- SIDEBAR ---------------- #
@@ -42,7 +42,7 @@ Powered by **Groq Llama 3.3 70B Versatile**, Prompt Engineering and Multi-Agent 
 
         st.subheader("🖥 Model")
 
-        st.code("Llama 3.3 70B Versatile")
+        st.code("openai/gpt-oss-120b")
 
         st.caption("Version 1.0")
 

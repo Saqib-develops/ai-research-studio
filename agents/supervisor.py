@@ -9,26 +9,23 @@ class SupervisorAgent:
 
     def __init__(self):
 
-        self.planner = PlannerAgent()
+        self.pipeline = [
 
-        self.search = SearchAgent()
+            PlannerAgent(),
 
-        self.paper = PaperAgent()
+            SearchAgent(),
 
-        self.fact_checker = FactCheckerAgent()
+            PaperAgent(),
 
-        self.writer = WriterAgent()
+            FactCheckerAgent(),
+
+            WriterAgent()
+
+        ]
 
     def run(self, state):
 
-        state = self.planner.run(state)
-
-        state = self.search.run(state)
-
-        state = self.paper.run(state)
-
-        state = self.fact_checker.run(state)
-
-        state = self.writer.run(state)
+        for agent in self.pipeline:
+            state = agent.run(state)
 
         return state
